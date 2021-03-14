@@ -24,12 +24,12 @@ namespace Algorithm
             {
                 while (x <= n)
                 {
-                    if (Check(queens, n, x, y))
+                    if (Check(queens, x, y))
                     {
-                        // 記錄每列 (y 座標) 皇后所在行位置 (x 座標)
+                        // 記錄每行 (y 座標) 皇后所在列位置 (x 座標)
                         queens[y-1] = x;
 
-                        // 檢查下一列前重置 x 座標
+                        // 檢查下一行前重置 x 座標
                         x = 1;
                         break;
                     }
@@ -39,16 +39,16 @@ namespace Algorithm
                     }
                 }
 
-                // 該列無法放置皇后則 Rollback
+                // 該行無法放置皇后則 Rollback
                 if (queens[y-1] == 0)
                 {  
-                    // Rollback 至第一列，表示無解
+                    // Rollback 至第一行，表示無解
                     if (y == 1)
                     {
                         break;
                     }
                     
-                    // Rollback 至上一列，x 座標往後移動及重置放置紀錄
+                    // Rollback 至上一行，x 座標往後移動及重置放置紀錄
                     y--;
                     x = queens[y-1] + 1;
                     queens[y-1] = 0;
@@ -73,11 +73,11 @@ namespace Algorithm
             Assert.Pass();
         }
 
-        private bool Check(int[] queens, int n, int x, int y)
+        private bool Check(int[] queens, int x, int y)
         {
             for (int i = 1; i <= y; i++)
             {
-                // 排除同行及對角線
+                // 排除同列及對角線
                 if (queens[i-1] == x || Math.Abs(y-i) == Math.Abs((queens[i-1] - x)))
                 {
                     return false;
